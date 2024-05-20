@@ -1,0 +1,46 @@
+name: invocifypro
+description: "A new Flutter project."
+publish_to: "none"
+version: 0.1.0
+
+environment:
+  sdk: ">=3.2.0 <4.0.0"
+
+dependencies:
+  bcrypt: ^1.1.3
+  crop_your_image: ^1.0.1
+  flutter:
+    sdk: flutter
+  flutter_easyloading: ^3.0.5
+  flutter_inappwebview: ^6.0.0
+  flutter_pdfview: ^1.3.2
+  flutter_swipe_action_cell: ^3.1.3
+  font_awesome_flutter: ^10.7.0
+  get: ^4.6.6
+  get_storage: ^2.1.1
+  html: ^0.15.4
+  http: ^1.2.0
+  image_picker: ^1.0.7
+  intl: ^0.19.0
+  intl_phone_field: ^3.2.0
+  mailer: ^6.1.0
+  otp: ^3.1.4
+  path_provider: ^2.1.2
+  pdf: ^3.10.7
+  printing: ^5.11.1
+  qr_code_scanner: ^1.0.1
+  qr_flutter: ^4.1.0
+  scan: ^1.6.0
+  url_launcher: ^6.2.5
+  whatsapp_share: ^2.0.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/invoice/

@@ -1,0 +1,209 @@
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    shopName VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL
+);
+
+TRUNCATE invoicifypro.users;
+
+SELECT * FROM invoicifypro.users;
+
+CREATE TABLE products (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    userid INT,
+    qrCode VARCHAR(255) UNIQUE NOT NULL,
+    productName VARCHAR(255) NOT NULL,
+    sellingPrice DECIMAL(10, 2) NOT NULL,
+    mrpPrice DECIMAL(10, 2) NOT NULL,
+    costPrice DECIMAL(10, 2) NOT NULL,
+    currentStock INT NOT NULL,
+    alertStockLimit INT NOT NULL,
+    stockUnit VARCHAR(50) NOT NULL,
+    FOREIGN KEY (userid) REFERENCES users(id)
+);
+
+CREATE TABLE IF NOT EXISTS shop_info (
+    user_id INT NOT NULL,
+    shop_name VARCHAR(255) NOT NULL,
+    shop_address VARCHAR(255) NOT NULL,
+    shop_email VARCHAR(255),
+    shop_phone VARCHAR(20),
+    shop_website VARCHAR(255),
+    shop_gst_no VARCHAR(255),
+    CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+
+
+
+
+
+
+
+
+
+
+DROP TABLE IF EXISTS users;
+
+CREATE TABLE users (
+  id int NOT NULL AUTO_INCREMENT,
+  email varchar(255) NOT NULL,
+  password varchar(255) NOT NULL,
+  PRIMARY KEY (id)
+);
+
+INSERT INTO users VALUES (1,'meet.butani2702@gmail.com','$2a$10$BL1hMSsLLqSColkUJZyBwuxOdmQeFl92IHMi.4Q.09Q/DbhFrWfSm');
+
+
+DROP TABLE IF EXISTS shop_info;
+
+CREATE TABLE shop_info (
+  user_id int NOT NULL,
+  shop_name varchar(255) NOT NULL,
+  shop_address varchar(255) NOT NULL,
+  shop_email varchar(255) DEFAULT NULL,
+  shop_phone varchar(20) DEFAULT NULL,
+  shop_website varchar(255) DEFAULT NULL,
+  shop_gst_no varchar(255) DEFAULT NULL,
+  shop_terms varchar(1000) DEFAULT NULL,
+  KEY fk_user_id (user_id),
+  CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users (id)
+);
+
+INSERT INTO shop_info VALUES (1,'InvocifyPro Pvt Ltd.','52, Vishal west, Kathawada GIDC, Ahmedabad, Gujarat, India - 382350','support@invocifypro.com','+91 93270 52373','','','');
+
+
+DROP TABLE IF EXISTS products;
+
+CREATE TABLE products (
+  id int NOT NULL AUTO_INCREMENT,
+  userid int DEFAULT NULL,
+  qrCode varchar(255) NOT NULL,
+  productName varchar(255) NOT NULL,
+  sellingPrice decimal(10,2) NOT NULL,
+  mrpPrice decimal(10,2) NOT NULL,
+  costPrice decimal(10,2) NOT NULL,
+  currentStock int NOT NULL,
+  alertStockLimit int NOT NULL,
+  stockUnit varchar(50) NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY qrCode (qrCode),
+  KEY userid (userid),
+  CONSTRAINT products_ibfk_1 FOREIGN KEY (userid) REFERENCES users (id)
+);
+
+INSERT INTO products VALUES (1,1,'8906010500375','Balaji Tikha Mitha Mix',10.00,0.00,0.00,0,0,'Kg'),(2,1,'8906010501259','Balaji Masala Sev Murmura',15.00,20.00,12.00,10,3,'Number'),(3,1,'8904130887093','Boat Airdopes 141',1299.00,1599.00,999.00,100,10,'Number'),(4,1,'8901396395584','Dettol Cool',35.00,45.00,25.00,10,2,'Number'),(5,1,'8901207021220','Real fruit power Apple juice',100.00,115.00,85.00,20,2,'Liter');
+
+
+
+
+
+
+
+
+
+-- Drop table if exists
+DROP TABLE IF EXISTS users;
+
+-- Create users table
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  email TEXT NOT NULL,
+  password TEXT NOT NULL
+);
+
+-- Insert data
+INSERT INTO users (email, password) VALUES ('meet.butani2702@gmail.com', '$2a$10$BL1hMSsLLqSColkUJZyBwuxOdmQeFl92IHMi.4Q.09Q/DbhFrWfSm');
+
+
+
+-- Drop table if exists
+DROP TABLE IF EXISTS shop_info;
+
+-- Create table
+CREATE TABLE shop_info (
+  user_id INT NOT NULL,
+  shop_name TEXT NOT NULL,
+  shop_address TEXT NOT NULL,
+  shop_email TEXT,
+  shop_phone VARCHAR(20),
+  shop_website TEXT,
+  shop_gst_no TEXT,
+  shop_terms TEXT DEFAULT '1. Payment Terms: Payment is due within 20 days from the date of the invoice.
+2. Late Payments: A late fee of X% may be charged on invoices not paid within the specified payment terms.
+3. Warranty: Products sold are covered by a standard X-year warranty from the date of purchase.',
+  CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users (id),
+  CONSTRAINT unique_user_id UNIQUE (user_id)
+);
+
+-- Insert data
+INSERT INTO shop_info (user_id, shop_name, shop_address, shop_email, shop_phone, shop_website, shop_gst_no)
+VALUES (1, 'InvocifyPro Pvt Ltd.', '52, Vishal west, Kathawada GIDC, Ahmedabad, Gujarat, India - 382350', 'support@invocifypro.com', '+91 93270 52373', NULL, NULL);
+
+
+
+-- Drop table if exists
+DROP TABLE IF EXISTS products;
+
+-- Create table
+CREATE TABLE products (
+  id SERIAL PRIMARY KEY,
+  userid INT,
+  "qrCode" TEXT UNIQUE NOT NULL,
+  "productName" TEXT NOT NULL,
+  "sellingPrice" DECIMAL(10,2) NOT NULL,
+  "mrpPrice" DECIMAL(10,2) NOT NULL,
+  "costPrice" DECIMAL(10,2) NOT NULL,
+  "currentStock" INT NOT NULL,
+  "alertStockLimit" INT NOT NULL,
+  "stockUnit" TEXT NOT NULL,
+  CONSTRAINT fk_userid FOREIGN KEY (userid) REFERENCES users (id)
+);
+
+-- Insert data
+INSERT INTO products (userid, "qrCode", "productName", "sellingPrice", "mrpPrice", "costPrice", "currentStock", "alertStockLimit", "stockUnit")
+VALUES 
+(1, '8906010500375', 'Balaji Tikha Mitha Mix', 10.00, 0.00, 0.00, 0, 0, 'Kg'),
+(1, '8906010501259', 'Balaji Masala Sev Murmura', 15.00, 20.00, 12.00, 10, 3, 'Number'),
+(1, '8904130887093', 'Boat Airdopes 141', 1299.00, 1599.00, 999.00, 100, 10, 'Number'),
+(1, '8901396395584', 'Dettol Cool', 35.00, 45.00, 25.00, 10, 2, 'Number'),
+(1, '8901207021220', 'Real fruit power Apple juice', 100.00, 115.00, 85.00, 20, 2, 'Liter');
+
+
+
+-- Drop table if exists
+DROP TABLE IF EXISTS invoices;
+
+-- Create table
+CREATE TABLE invoices (
+    invoice_no TEXT PRIMARY KEY,
+    shop_id INT,
+    shop_name TEXT,
+    shop_address TEXT,
+    shop_email TEXT,
+    shop_phone VARCHAR(20),
+    shop_gst_no VARCHAR(20),
+    cust_name TEXT,
+    cust_address TEXT,
+    cust_phone VARCHAR(20),
+    cust_email TEXT,
+    invoice_date DATE,
+    due_date DATE,
+    subtotal NUMERIC(10, 2),
+    discount NUMERIC(10, 2),
+    tax_rate NUMERIC(5, 2),
+    total_amount NUMERIC(10, 2),
+    products JSONB,
+    CONSTRAINT fk_shop_id_invoices FOREIGN KEY (shop_id) REFERENCES users(id)
+);
+
+
+CREATE TABLE custom_qr_codes (
+  id SERIAL PRIMARY KEY,
+  userid INTEGER NOT NULL,
+  qrcode TEXT NOT NULL,
+  product_name TEXT NOT NULL,
+  selling_price TEXT NOT NULL,
+  FOREIGN KEY (userid) REFERENCES users(id)
+);

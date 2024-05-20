@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+  prefix="content: http://purl.org/rss/1.0/modules/content/  dc: http://purl.org/dc/terms/  foaf: http://xmlns.com/foaf/0.1/  og: http://ogp.me/ns#  rdfs: http://www.w3.org/2000/01/rdf-schema#  schema: http://schema.org/  sioc: http://rdfs.org/sioc/ns#  sioct: http://rdfs.org/sioc/types#  skos: http://www.w3.org/2004/02/skos/core#  xsd: http://www.w3.org/2001/XMLSchema# ">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="canonical" href="https://www.gs1.org/services/verified-by-gs1/results" />
+  <meta name="Generator" content="Drupal 9 (https://www.drupal.org)" />
+  <meta name="MobileOptimized" content="width" />
+  <meta name="HandheldFriendly" content="true" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+
+</head>
+
+<body class="layout-no-sidebars page-node-43848 path-node node--type-page">
+  <div class="dialog-off-canvas-main-canvas" data-off-canvas-main-canvas>
+    <div class="site-content">
+      <div id="block-gsone-revamp-content" class="block block-system block-system-main-block">
+        <div class="content">
+          <article role="article" about="/services/verified-by-gs1/results" typeof="schema:WebPage"
+            class="node node--type-page node--view-mode-full clearfix">
+            <div class="node__content clearfix">
+              <div class="vbg-container bg-ui-1 _none">
+                <div class="w-100">
+                  <div class="layout row no-gutters layout-builder__layout">
+                    <div class="col-md-12 col-s-12 col-xs-12">
+                      <div
+                        class="verified-search-form block block-gsone-verified-search block-verified-search-block pt-spacer-4 pb-spacer-6"
+                        data-drupal-selector="verified-search-form">
+                        <div class="content container">
+                          <div id="verified-search-form-wrapper">
+                            <div class="verified-gs1-search">
+                              <form action="/services/verified-by-gs1/results?gtin=8906010500375" method="post"
+                                id="verified-search-form" accept-charset="UTF-8">
+                                <div class="row container-inputs js-form-wrapper form-wrapper mb-3"
+                                  data-drupal-selector="edit-container" id="edit-container">
+
+                                  <div data-drupal-selector="edit-recaptcha" id="edit-recaptcha"
+                                    class="js-form-wrapper form-wrapper mb-3"></div>
+                                  <input id="vfs-token" data-drupal-selector="edit-vfs-token" type="hidden"
+                                    name="vfs_token" value="smreqyuu6FfaWgl6uRf6pYGAP-Z5CvlJ6hq0j8vENbM"
+                                    class="form-control" />
+                                  <div data-drupal-selector="edit-captcha" class="captcha"><input
+                                      data-drupal-selector="edit-captcha-sid" type="hidden" name="captcha_sid"
+                                      value="2559369" class="form-control" />
+                                    <input data-drupal-selector="edit-captcha-token" type="hidden" name="captcha_token"
+                                      value="kfgJIq4CvIGQhcKdMYStyADtzApYcpgr5dbNS--7cm0" class="form-control" />
+                                    <input data-drupal-selector="edit-captcha-response" type="hidden"
+                                      name="captcha_response" value class="form-control" />
+                                  </div>
+                                </div>
+                                <input autocomplete="off"
+                                  data-drupal-selector="form-ig-wlkaudrgqi7ce-n5ontd0gcmpe-ixw0hz8gqat-e" type="hidden"
+                                  name="form_build_id" value="form-Ig_WlkAuDrGqI7ce_n5oNTd0Gcmpe-Ixw0Hz8gQaT_E"
+                                  class="form-control" />
+                                <input data-drupal-selector="edit-verified-search-form" type="hidden" name="form_id"
+                                  value="verified_search_form" class="form-control" />
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
