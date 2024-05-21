@@ -102,7 +102,7 @@ InvocifyPro is licensed under the MIT License. See the [LICENSE](LICENSE) file f
 
 For any inquiries, issues, or suggestions, please contact us at:
 
-- Email: support@invocifypro.com
+- Email: meet.butani2702@gmail.com
 - GitHub Issues: [InvocifyPro Issues](https://github.com/meetbutani/InvocifyPro/issues)
 
 Thank you for using InvocifyPro! We hope it enhances your business operations by simplifying invoice generation and stock management.
