@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:bcrypt/bcrypt.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -74,7 +75,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
               customButton(
                 label: 'Register',
                 onTap: () async {
-                  print("Register Clicked");
+                  if (kDebugMode) {
+                    print("Register Clicked");
+                  }
                   if (_validateFields()) {
                     await register();
                   }
@@ -231,7 +234,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
     try {
       return true;
     } catch (error) {
-      print(error);
+      if (kDebugMode) {
+        print(error);
+      }
       return false;
     }
   }

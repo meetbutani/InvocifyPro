@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -368,7 +369,9 @@ class _CustomerDetailPageState extends State<CustomerDetailPage> {
         bytes: logobytes,
       );
     } catch (error) {
-      print("Shop logo load error : $error");
+      if (kDebugMode) {
+        print("Shop logo load error : $error");
+      }
       logobytes = null;
       logoImage = null;
     }

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -858,7 +859,9 @@ class _InvoiceGeneratorPageState extends State<InvoiceGeneratorPage> {
 
   Widget _buildBarcodeScannerBody() {
     timer = Timer.periodic(const Duration(seconds: 5), (_) {
-      print("timer created");
+      if (kDebugMode) {
+        print("timer created");
+      }
       timer.cancel();
       controller.pause();
       controller.resume();
@@ -868,12 +871,16 @@ class _InvoiceGeneratorPageState extends State<InvoiceGeneratorPage> {
       scanAreaScale: .7,
       scanLineColor: MyTheme.accent,
       onCapture: (data) async {
-        print("Product QR: $data");
+        if (kDebugMode) {
+          print("Product QR: $data");
+        }
         // Timer(const Duration(milliseconds: 1500), () {
         //   controller.resume();
         // });
         if (timer.isActive) {
-          print("timer cancel");
+          if (kDebugMode) {
+            print("timer cancel");
+          }
           timer.cancel();
         }
 
@@ -968,20 +975,26 @@ class _InvoiceGeneratorPageState extends State<InvoiceGeneratorPage> {
             // Handle errors
             setState(() {});
             showSnackBar(context, qrCodeData["message"]);
-            print('Error checking QR Code: ${productData.reasonPhrase}');
+            if (kDebugMode) {
+              print('Error checking QR Code: ${productData.reasonPhrase}');
+            }
           }
           EasyLoading.dismiss();
           return;
         } catch (error) {
           EasyLoading.dismiss();
-          print("Error occur: $error");
+          if (kDebugMode) {
+            print("Error occur: $error");
+          }
           showSnackBar(
             context,
             "An error occurred. Please check your internet connection and try again.",
           );
         }
 
-        print("timer reset.");
+        if (kDebugMode) {
+          print("timer reset.");
+        }
 
         timer = Timer.periodic(const Duration(seconds: 5), (_) {
           controller.pause();
@@ -1026,13 +1039,17 @@ class _InvoiceGeneratorPageState extends State<InvoiceGeneratorPage> {
       } else {
         // Handle errors
         showSnackBar(context, productsData["message"]);
-        print('Error getting products: ${allProductData.reasonPhrase}');
+        if (kDebugMode) {
+          print('Error getting products: ${allProductData.reasonPhrase}');
+        }
       }
       EasyLoading.dismiss();
       return;
     } catch (error) {
       EasyLoading.dismiss();
-      print("Error occur: $error");
+      if (kDebugMode) {
+        print("Error occur: $error");
+      }
       showSnackBar(
         context,
         "An error occurred. Please check your internet connection and try again.",
@@ -1162,7 +1179,9 @@ class _InvoiceGeneratorPageState extends State<InvoiceGeneratorPage> {
         bytes: logobytes,
       );
     } catch (error) {
-      print("Shop logo load error : $error");
+      if (kDebugMode) {
+        print("Shop logo load error : $error");
+      }
       logobytes = null;
       logoImage = null;
     }
@@ -1474,7 +1493,9 @@ class _InvoiceGeneratorPageState extends State<InvoiceGeneratorPage> {
         .create(recursive: true);
 
     final file = File('${appDocDir.path}/invoice.pdf');
-    print('File path: ${appDocDir.path}/invoice.pdf');
+    if (kDebugMode) {
+      print('File path: ${appDocDir.path}/invoice.pdf');
+    }
 
     await file.writeAsBytes(await pdf.save());
 

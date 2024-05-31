@@ -2,9 +2,11 @@ import 'package:get_storage/get_storage.dart';
 
 class ApiConstants {
   // static const String baseUrl = 'http://192.168.87.179:3000';
-  static String get baseUrl => GetStorage().read('use_network') ?? false
-      ? 'https://obliging-jointly-bengal.ngrok-free.app'
-      : 'https://invocifypro.glitch.me';
+  // static String get baseUrl => GetStorage().read('use_network') ?? false
+  //     ? 'https://obliging-jointly-bengal.ngrok-free.app'
+  //     : 'https://invocifypro.glitch.me';
+
+  static String get baseUrl => 'https://invocifypro.glitch.me';
   static String loginUrl = '$baseUrl/login';
   static String registerUrl = '$baseUrl/register';
   static String changePasswordUrl = '$baseUrl/changePassword';

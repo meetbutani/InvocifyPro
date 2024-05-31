@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -254,7 +255,9 @@ class _AddProductPageState extends State<AddProductPage> {
                 }
               } else {
                 // Handle errors
-                print('Error checking QR Code: ${qrDetails.reasonPhrase}');
+                if (kDebugMode) {
+                  print('Error checking QR Code: ${qrDetails.reasonPhrase}');
+                }
               }
               EasyLoading.dismiss();
               return;
@@ -271,150 +274,150 @@ class _AddProductPageState extends State<AddProductPage> {
     );
   }
 
-  Future<void> fetchData(String data) async {
-    try {
-      String gtin = data; //'8906010500375'; // GTIN code
-      String url =
-          'https://www.gs1.org/services/verified-by-gs1/results?gtin=$gtin';
+  // Future<void> fetchData(String data) async {
+  //   try {
+  //     String gtin = data; //'8906010500375'; // GTIN code
+  //     String url =
+  //         'https://www.gs1.org/services/verified-by-gs1/results?gtin=$gtin';
 
-      http.Response response = await http.get(Uri.parse(url), headers: {
-        'Accept':
-            'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
-        'Accept-Encoding': 'gzip, deflate, br',
-        'Accept-Language': 'en-US,en;q=0.9',
-        'Cache-Control': 'no-cache',
-        'Cookie':
-            'Drupal.visitor.teamMember=no; gsone_verified_search_terms_1_2=1',
-        'Pragma': 'no-cache',
-        'Sec-Ch-Ua':
-            '"Not A(Brand";v="99", "Brave";v="121", "Chromium";v="121"',
-        'Sec-Ch-Ua-Mobile': '?0',
-        'Sec-Ch-Ua-Platform': '"Windows"',
-        'Sec-Fetch-Dest': 'document',
-        'Sec-Fetch-Mode': 'navigate',
-        'Sec-Fetch-Site': 'none',
-        'Sec-Fetch-User': '?1',
-        'Sec-Gpc': '1',
-        'Upgrade-Insecure-Requests': '1',
-        'User-Agent':
-            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36'
-      });
+  //     http.Response response = await http.get(Uri.parse(url), headers: {
+  //       'Accept':
+  //           'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
+  //       'Accept-Encoding': 'gzip, deflate, br',
+  //       'Accept-Language': 'en-US,en;q=0.9',
+  //       'Cache-Control': 'no-cache',
+  //       'Cookie':
+  //           'Drupal.visitor.teamMember=no; gsone_verified_search_terms_1_2=1',
+  //       'Pragma': 'no-cache',
+  //       'Sec-Ch-Ua':
+  //           '"Not A(Brand";v="99", "Brave";v="121", "Chromium";v="121"',
+  //       'Sec-Ch-Ua-Mobile': '?0',
+  //       'Sec-Ch-Ua-Platform': '"Windows"',
+  //       'Sec-Fetch-Dest': 'document',
+  //       'Sec-Fetch-Mode': 'navigate',
+  //       'Sec-Fetch-Site': 'none',
+  //       'Sec-Fetch-User': '?1',
+  //       'Sec-Gpc': '1',
+  //       'Upgrade-Insecure-Requests': '1',
+  //       'User-Agent':
+  //           'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36'
+  //     });
 
-      if (response.statusCode == 200) {
-        // Parse HTML response
-        print('Api 1 called succesfull');
-        htmlDom.Document document = htmlParser.parse(response.body);
-        print('convert sucessful');
-        String vfsToken =
-            document.querySelector('#vfs-token')?.attributes['value'] ?? '';
-        String captchaSid = document
-                .querySelector('[name="captcha_sid"]')
-                ?.attributes['value'] ??
-            '';
-        String captchaToken = document
-                .querySelector('[name="captcha_token"]')
-                ?.attributes['value'] ??
-            '';
-        String formBuildId = document
-                .querySelector('[name="form_build_id"]')
-                ?.attributes['value'] ??
-            '';
+  //     if (response.statusCode == 200) {
+  //       // Parse HTML response
+  //       print('Api 1 called succesfull');
+  //       htmlDom.Document document = htmlParser.parse(response.body);
+  //       print('convert sucessful');
+  //       String vfsToken =
+  //           document.querySelector('#vfs-token')?.attributes['value'] ?? '';
+  //       String captchaSid = document
+  //               .querySelector('[name="captcha_sid"]')
+  //               ?.attributes['value'] ??
+  //           '';
+  //       String captchaToken = document
+  //               .querySelector('[name="captcha_token"]')
+  //               ?.attributes['value'] ??
+  //           '';
+  //       String formBuildId = document
+  //               .querySelector('[name="form_build_id"]')
+  //               ?.attributes['value'] ??
+  //           '';
 
-        Map<String, String> postData = {
-          'search_type': 'gtin',
-          'gtin': gtin,
-          'gln': '',
-          'country': '',
-          'street_address': '',
-          'postal_code': '',
-          'city': '',
-          'company_name': '',
-          'other_key_type': '',
-          'other_key': '',
-          'vfs_token': vfsToken,
-          'captcha_sid': captchaSid,
-          'captcha_token': captchaToken,
-          'captcha_response': '',
-          'g-recaptcha-response': '',
-          'form_build_id': formBuildId,
-          'form_id': 'verified_search_form',
-          '_triggering_element_name': 'gtin_submit',
-          '_triggering_element_value': 'Search',
-          '_drupal_ajax': '1',
-          'ajax_page_state%5Btheme%5D': 'gsone_revamp',
-          'ajax_page_state%5Btheme_token%5D': '',
-          'ajax_page_state%5Blibraries%5D':
-              'addtoany%2Faddtoany%2Cback_to_top%2Fback_to_top_icon%2Cback_to_top%2Fback_to_top_js%2Cbootstrap_barrio%2Fbootstrap-icons%2Cbootstrap_barrio%2Fglobal-styling%2Cbootstrap_barrio%2Fmessages_white%2Cbootstrap_barrio%2Fnode%2Cbootstrap_styles%2Fplugin.background_color.build%2Cbootstrap_styles%2Fplugin.margin.build%2Cbootstrap_styles%2Fplugin.padding.build%2Cbootstrap_styles%2Fplugin.scroll_effects.build%2Ccaptcha%2Fbase%2Cckeditor_bootstrap_tabs%2Ftabs%2Ccore%2Fdrupal.states%2Ccore%2Finternal.jquery.form%2Ccore%2Fjquery%2Ccore%2Fjquery.form%2Cfontawesome%2Ffontawesome.svg%2Cfontawesome%2Ffontawesome.svg.shim%2Cgsone_revamp%2Fbootstrap_cdn%2Cgsone_revamp%2Fglobal-styling%2Cgsone_revamp%2Fselect%2Cgsone_revamp%2Fselect-library%2Cgsone_verified_search%2Fverified_search%2Crecaptcha_once%2Frecaptcha_once%2Csystem%2Fbase%2Cviews%2Fviews.module%2Cwebform%2Flibraries.jquery.intl-tel-input'
-        };
+  //       Map<String, String> postData = {
+  //         'search_type': 'gtin',
+  //         'gtin': gtin,
+  //         'gln': '',
+  //         'country': '',
+  //         'street_address': '',
+  //         'postal_code': '',
+  //         'city': '',
+  //         'company_name': '',
+  //         'other_key_type': '',
+  //         'other_key': '',
+  //         'vfs_token': vfsToken,
+  //         'captcha_sid': captchaSid,
+  //         'captcha_token': captchaToken,
+  //         'captcha_response': '',
+  //         'g-recaptcha-response': '',
+  //         'form_build_id': formBuildId,
+  //         'form_id': 'verified_search_form',
+  //         '_triggering_element_name': 'gtin_submit',
+  //         '_triggering_element_value': 'Search',
+  //         '_drupal_ajax': '1',
+  //         'ajax_page_state%5Btheme%5D': 'gsone_revamp',
+  //         'ajax_page_state%5Btheme_token%5D': '',
+  //         'ajax_page_state%5Blibraries%5D':
+  //             'addtoany%2Faddtoany%2Cback_to_top%2Fback_to_top_icon%2Cback_to_top%2Fback_to_top_js%2Cbootstrap_barrio%2Fbootstrap-icons%2Cbootstrap_barrio%2Fglobal-styling%2Cbootstrap_barrio%2Fmessages_white%2Cbootstrap_barrio%2Fnode%2Cbootstrap_styles%2Fplugin.background_color.build%2Cbootstrap_styles%2Fplugin.margin.build%2Cbootstrap_styles%2Fplugin.padding.build%2Cbootstrap_styles%2Fplugin.scroll_effects.build%2Ccaptcha%2Fbase%2Cckeditor_bootstrap_tabs%2Ftabs%2Ccore%2Fdrupal.states%2Ccore%2Finternal.jquery.form%2Ccore%2Fjquery%2Ccore%2Fjquery.form%2Cfontawesome%2Ffontawesome.svg%2Cfontawesome%2Ffontawesome.svg.shim%2Cgsone_revamp%2Fbootstrap_cdn%2Cgsone_revamp%2Fglobal-styling%2Cgsone_revamp%2Fselect%2Cgsone_revamp%2Fselect-library%2Cgsone_verified_search%2Fverified_search%2Crecaptcha_once%2Frecaptcha_once%2Csystem%2Fbase%2Cviews%2Fviews.module%2Cwebform%2Flibraries.jquery.intl-tel-input'
+  //       };
 
-        http.Response postResponse = await http.post(
-          Uri.parse(
-              'https://www.gs1.org/services/verified-by-gs1/results?gtin=$gtin&ajax_form=1&_wrapper_format=drupal_ajax'),
-          headers: {
-            'authority': 'www.gs1.org',
-            'method': 'POST',
-            'path': '/services/verified-by-gs1/results?',
-            'scheme': 'https',
-            'Accept': 'application/json, text/javascript, */*; q=0.01',
-            'Accept-Encoding': 'gzip, deflate, br',
-            'Accept-Language': 'en-US,en;q=0.9',
-            'Cache-Control': 'no-cache',
-            'Content-Length': '1590',
-            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-            'Cookie':
-                'Drupal.visitor.teamMember=no; gsone_verified_search_terms_1_2=1',
-            'Origin': 'https://www.gs1.org',
-            // 'Pragma': 'no-cache',
-            'Referer':
-                'https://www.gs1.org/services/verified-by-gs1/results?gtin=$gtin',
-            'Sec-Ch-Ua':
-                '"Not A(Brand";v="99", "Brave";v="121", "Chromium";v="121"',
-            'Sec-Ch-Ua-Mobile': '?0',
-            'Sec-Ch-Ua-Platform': '"Windows"',
-            'Sec-Fetch-Dest': 'empty',
-            'Sec-Fetch-Mode': 'cors',
-            'Sec-Fetch-Site': 'same-origin',
-            'Sec-Gpc': '1',
-            'User-Agent':
-                'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36',
-            'X-Requested-With': 'XMLHttpRequest'
-          },
-          body: postData,
-        );
+  //       http.Response postResponse = await http.post(
+  //         Uri.parse(
+  //             'https://www.gs1.org/services/verified-by-gs1/results?gtin=$gtin&ajax_form=1&_wrapper_format=drupal_ajax'),
+  //         headers: {
+  //           'authority': 'www.gs1.org',
+  //           'method': 'POST',
+  //           'path': '/services/verified-by-gs1/results?',
+  //           'scheme': 'https',
+  //           'Accept': 'application/json, text/javascript, */*; q=0.01',
+  //           'Accept-Encoding': 'gzip, deflate, br',
+  //           'Accept-Language': 'en-US,en;q=0.9',
+  //           'Cache-Control': 'no-cache',
+  //           'Content-Length': '1590',
+  //           'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+  //           'Cookie':
+  //               'Drupal.visitor.teamMember=no; gsone_verified_search_terms_1_2=1',
+  //           'Origin': 'https://www.gs1.org',
+  //           // 'Pragma': 'no-cache',
+  //           'Referer':
+  //               'https://www.gs1.org/services/verified-by-gs1/results?gtin=$gtin',
+  //           'Sec-Ch-Ua':
+  //               '"Not A(Brand";v="99", "Brave";v="121", "Chromium";v="121"',
+  //           'Sec-Ch-Ua-Mobile': '?0',
+  //           'Sec-Ch-Ua-Platform': '"Windows"',
+  //           'Sec-Fetch-Dest': 'empty',
+  //           'Sec-Fetch-Mode': 'cors',
+  //           'Sec-Fetch-Site': 'same-origin',
+  //           'Sec-Gpc': '1',
+  //           'User-Agent':
+  //               'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36',
+  //           'X-Requested-With': 'XMLHttpRequest'
+  //         },
+  //         body: postData,
+  //       );
 
-        if (postResponse.statusCode == 200) {
-          // Process the POST response as needed
-          print(response.body.toString());
-          // var data = json
-          //     .decode(response.body)
-          //     .filter((obj) => obj.selector == '#product-container');
+  //       if (postResponse.statusCode == 200) {
+  //         // Process the POST response as needed
+  //         print(response.body.toString());
+  //         // var data = json
+  //         //     .decode(response.body)
+  //         //     .filter((obj) => obj.selector == '#product-container');
 
-          // if (data.length > 0) {
-          //   htmlDom.Document document = htmlParser.parse(data[0].data);
+  //         // if (data.length > 0) {
+  //         //   htmlDom.Document document = htmlParser.parse(data[0].data);
 
-          //   String captchaText = document
-          //           .querySelector('#product-container .errors ul li')
-          //           ?.text ??
-          //       'Not Found';
-          //   String productDescription = document
-          //           .querySelector('table.company tr:eq(2) td strong')
-          //           ?.text ??
-          //       'Not Found';
+  //         //   String captchaText = document
+  //         //           .querySelector('#product-container .errors ul li')
+  //         //           ?.text ??
+  //         //       'Not Found';
+  //         //   String productDescription = document
+  //         //           .querySelector('table.company tr:eq(2) td strong')
+  //         //           ?.text ??
+  //         //       'Not Found';
 
-          //   print("captchaText: $captchaText");
-          //   print("productDescription: $productDescription");
-          // }
-          // print(postResponse.body);
-        } else {
-          print('Failed to make POST request');
-        }
-      } else {
-        print('Failed to fetch data');
-      }
-    } catch (e) {
-      print('Error: $e');
-    }
-  }
+  //         //   print("captchaText: $captchaText");
+  //         //   print("productDescription: $productDescription");
+  //         // }
+  //         // print(postResponse.body);
+  //       } else {
+  //         print('Failed to make POST request');
+  //       }
+  //     } else {
+  //       print('Failed to fetch data');
+  //     }
+  //   } catch (e) {
+  //     print('Error: $e');
+  //   }
+  // }
 
   Widget _buildTextField(TextEditingController controller, String labelText,
       {TextInputType keyboardType = TextInputType.text,
@@ -482,7 +485,9 @@ class _AddProductPageState extends State<AddProductPage> {
         !isNumeric(_alertStockLimitController.text)) {
       // Handle error: Invalid data type
       showSnackBar(context, "Invalid data type for numeric fields");
-      print('Error: Invalid data type for numeric fields');
+      if (kDebugMode) {
+        print('Error: Invalid data type for numeric fields');
+      }
       return;
     }
 
@@ -504,7 +509,9 @@ class _AddProductPageState extends State<AddProductPage> {
       }
     } else {
       // Handle errors
-      print('Error checking QR Code: ${qrCodeResponse.reasonPhrase}');
+      if (kDebugMode) {
+        print('Error checking QR Code: ${qrCodeResponse.reasonPhrase}');
+      }
       return;
     }
 
@@ -544,7 +551,9 @@ class _AddProductPageState extends State<AddProductPage> {
       _alertStockLimitController.text = "";
     } else {
       // Handle errors
-      print('Error: ${response.reasonPhrase}');
+      if (kDebugMode) {
+        print('Error: ${response.reasonPhrase}');
+      }
     }
   }
 

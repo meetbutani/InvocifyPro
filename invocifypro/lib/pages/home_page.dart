@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -213,20 +214,22 @@ class _HomePageState extends State<HomePage> {
                   Get.back();
                 },
               ),
-              ListTile(
-                title: Text(
-                  'Use Network',
-                  style: TextStyle(fontSize: 18, color: MyTheme.textColor),
-                ),
-                trailing: Switch(
-                  value: GetStorage().read('use_network') ?? true,
-                  onChanged: (value) async {
-                    print(value);
-                    await GetStorage().write('use_network', value);
-                    setState(() {});
-                  },
-                ),
-              ),
+              // ListTile(
+              //   title: Text(
+              //     'Use Network',
+              //     style: TextStyle(fontSize: 18, color: MyTheme.textColor),
+              //   ),
+              //   trailing: Switch(
+              //     value: GetStorage().read('use_network') ?? true,
+              //     onChanged: (value) async {
+              //       if (kDebugMode) {
+              //         print(value);
+              //       }
+              //       await GetStorage().write('use_network', value);
+              //       setState(() {});
+              //     },
+              //   ),
+              // ),
               ListTile(
                 title: const Text(
                   'Logout',

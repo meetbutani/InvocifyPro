@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -100,7 +101,9 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
               customButton(
                 label: 'Verify OTP',
                 onTap: () {
-                  print(widget.onOtpVerify);
+                  if (kDebugMode) {
+                    print(widget.onOtpVerify);
+                  }
                   if (verifyOTP()) {
                     widget.onOtpVerify.call();
                   }

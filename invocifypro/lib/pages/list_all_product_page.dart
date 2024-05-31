@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
@@ -48,6 +49,10 @@ class _ListAllProductPageState extends State<ListAllProductPage> {
     var response = await http.get(Uri.parse(
         ApiConstants.getProductsUrl + GetStorage().read('id').toString()));
 
+    if (kDebugMode) {
+      print(ApiConstants.getProductsUrl);
+    }
+
     EasyLoading.dismiss();
 
     if (response.statusCode == 200) {
@@ -61,7 +66,9 @@ class _ListAllProductPageState extends State<ListAllProductPage> {
     } else {
       showSnackBar(context, json.decode(response.body)['message']);
       // Handle errors
-      print('Failed to load products: ${response.reasonPhrase}');
+      if (kDebugMode) {
+        print('Failed to load products: ${response.reasonPhrase}');
+      }
     }
   }
 
@@ -192,7 +199,9 @@ class _ListAllProductPageState extends State<ListAllProductPage> {
                                 EditProductPage(
                                     productId: filteredProducts[index].qrCode));
 
-                            print(result);
+                            if (kDebugMode) {
+                              print(result);
+                            }
 
                             if (result != null && result) {
                               await fetchProducts();
@@ -356,9 +365,11 @@ class _ListAllProductPageState extends State<ListAllProductPage> {
 
   Future<void> _deleteProduct(int index) async {
     EasyLoading.show(status: 'Please Wait ...');
-    print(GetStorage().read('id').toString());
-    print(filteredProducts[index].qrCode);
-    print(ApiConstants.baseUrl);
+    if (kDebugMode) {
+      print(GetStorage().read('id').toString());
+      print(filteredProducts[index].qrCode);
+      print(ApiConstants.baseUrl);
+    }
     var response = await http.delete(
       Uri.parse(ApiConstants.deleteProductUrl),
       headers: {'Content-Type': 'application/json'},
@@ -376,7 +387,9 @@ class _ListAllProductPageState extends State<ListAllProductPage> {
       fetchProducts();
     } else {
       // Handle errors
-      print('Error in deleting invoice: ${response.statusCode}');
+      if (kDebugMode) {
+        print('Error in deleting invoice: ${response.statusCode}');
+      }
       showSnackBar(context, "Error in deleting product.");
     }
   }

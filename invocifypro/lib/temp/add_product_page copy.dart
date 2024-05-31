@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:ffi';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
@@ -248,7 +249,9 @@ class _AddProductPageState extends State<AddProductPage> {
         !isNumeric(_alertStockLimitController.text)) {
       // Handle error: Invalid data type
       showSnackBar(context, "Invalid data type for numeric fields");
-      print('Error: Invalid data type for numeric fields');
+      if (kDebugMode) {
+        print('Error: Invalid data type for numeric fields');
+      }
       return;
     }
 
@@ -271,7 +274,9 @@ class _AddProductPageState extends State<AddProductPage> {
       }
     } else {
       // Handle errors
-      print('Error checking QR Code: ${qrCodeResponse.reasonPhrase}');
+      if (kDebugMode) {
+        print('Error checking QR Code: ${qrCodeResponse.reasonPhrase}');
+      }
       return;
     }
 
@@ -293,7 +298,9 @@ class _AddProductPageState extends State<AddProductPage> {
         'stockUnit': _selectedStockUnit,
       }),
     );
-    print(response);
+    if (kDebugMode) {
+      print(response);
+    }
     if (response.statusCode == 200) {
       // Product stored successfully
       _qrCodeController.text = "";
@@ -305,7 +312,9 @@ class _AddProductPageState extends State<AddProductPage> {
       _alertStockLimitController.text = "";
     } else {
       // Handle errors
-      print('Error: ${response.reasonPhrase}');
+      if (kDebugMode) {
+        print('Error: ${response.reasonPhrase}');
+      }
     }
   }
 

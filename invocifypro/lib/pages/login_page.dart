@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:bcrypt/bcrypt.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -191,7 +192,9 @@ class _LoginPageState extends State<LoginPage> {
       // print(response.body);
       Map<String, dynamic> responseBody = json.decode(response.body);
       if (responseBody['ok']) {
-        print(responseBody['data']);
+        if (kDebugMode) {
+          print(responseBody['data']);
+        }
         GetStorage gs = GetStorage();
         gs.write("isLogin", true);
         gs.write("id", responseBody['data']['id']);
@@ -229,7 +232,9 @@ class _LoginPageState extends State<LoginPage> {
         "An error occurred. Please check your internet connection and try again.",
       );
 
-      print("Errore Occured in login : $error");
+      if (kDebugMode) {
+        print("Errore Occured in login : $error");
+      }
     }
   }
 

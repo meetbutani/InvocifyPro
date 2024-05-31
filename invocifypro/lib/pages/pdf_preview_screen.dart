@@ -3,6 +3,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
@@ -75,19 +76,27 @@ class PDFPreviewScreen extends StatelessWidget {
           autoSpacing: false,
           pageFling: false,
           onRender: (pages) {
-            print("PDF is rendered");
+            if (kDebugMode) {
+              print("PDF is rendered");
+            }
           },
           onError: (error) {
-            print(error.toString());
+            if (kDebugMode) {
+              print(error.toString());
+            }
           },
           onPageError: (page, error) {
-            print('$page: ${error.toString()}');
+            if (kDebugMode) {
+              print('$page: ${error.toString()}');
+            }
           },
           onViewCreated: (PDFViewController pdfViewController) {
             // You can use the controller to interact with the PDF view
           },
           onPageChanged: (int? page, int? total) {
-            print('page change: $page/$total');
+            if (kDebugMode) {
+              print('page change: $page/$total');
+            }
           },
         ),
         floatingActionButton: Column(
@@ -179,7 +188,9 @@ class PDFPreviewScreen extends StatelessWidget {
     );
 
     if (shareResult != null && shareResult) {
-      print('File shared successfully.');
+      if (kDebugMode) {
+        print('File shared successfully.');
+      }
     } else {
       showDialog(
         context: context,
@@ -289,7 +300,9 @@ class PDFPreviewScreen extends StatelessWidget {
       // showSnackBar(context, "Invoice created successfully.");
     } else {
       // Handle errors
-      print('Error in saving invoice: ${response.reasonPhrase}');
+      if (kDebugMode) {
+        print('Error in saving invoice: ${response.reasonPhrase}');
+      }
       showSnackBar(context, "Error in saving invoice.");
     }
   }

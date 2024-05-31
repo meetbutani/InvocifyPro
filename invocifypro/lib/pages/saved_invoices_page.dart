@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -205,12 +206,16 @@ class _SavedInvoicesPageState extends State<SavedInvoicesPage> {
     } else {
       showSnackBar(context, json.decode(response.body)['message']);
       // Handle errors
-      print('Failed to load invoices: ${response.reasonPhrase}');
+      if (kDebugMode) {
+        print('Failed to load invoices: ${response.reasonPhrase}');
+      }
     }
   }
 
   void filterInvoices(String query) {
-    print("filter called");
+    if (kDebugMode) {
+      print("filter called");
+    }
     setState(() {
       filteredInvoices = invoices.where((invoice) {
         return invoice.invoiceNo
@@ -218,12 +223,16 @@ class _SavedInvoicesPageState extends State<SavedInvoicesPage> {
                 .contains(query.trim().toLowerCase()) ||
             invoice.custName.toLowerCase().contains(query.trim().toLowerCase());
       }).toList();
-      print(filteredInvoices.toString());
+      if (kDebugMode) {
+        print(filteredInvoices.toString());
+      }
     });
   }
 
   Future<String> generateInvoicePdf(Invoice invoiceData) async {
-    print(invoiceData.products);
+    if (kDebugMode) {
+      print(invoiceData.products);
+    }
     List<dynamic> invoiceItemsList = invoiceData.products;
     // invoiceItemsList.sort((a, b) => b[3].compareTo(a[3]));
 
@@ -267,7 +276,9 @@ class _SavedInvoicesPageState extends State<SavedInvoicesPage> {
         bytes: logobytes,
       );
     } catch (error) {
-      print("Shop logo load error : $error");
+      if (kDebugMode) {
+        print("Shop logo load error : $error");
+      }
       logobytes = null;
       logoImage = null;
     }

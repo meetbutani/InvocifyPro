@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -64,7 +65,9 @@ class _LowStockProductsListPageState extends State<LowStockProductsListPage> {
     } else {
       showSnackBar(context, json.decode(response.body)['message']);
       // Handle errors
-      print('Failed to load products: ${response.reasonPhrase}');
+      if (kDebugMode) {
+        print('Failed to load products: ${response.reasonPhrase}');
+      }
     }
   }
 

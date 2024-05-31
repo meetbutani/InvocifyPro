@@ -59,7 +59,9 @@ class _ShopInfoPageState extends State<ShopInfoPage> {
 
     number = PhoneNumber.fromCompleteNumber(
         completeNumber: box.read("shopPhone") ?? "");
-    print(number.completeNumber);
+    if (kDebugMode) {
+      print(number.completeNumber);
+    }
     _shopPhoneController.text = number.number;
 
     _shopGSTNoController.text = box.read("shopGSTNo") ?? "";
@@ -82,7 +84,9 @@ class _ShopInfoPageState extends State<ShopInfoPage> {
     if (init && imageBytes == null) {
       String imageUrl =
           "${ApiConstants.getShopLogoUrl}${GetStorage().read("email") ?? "noemail"}.png";
-      print(imageUrl);
+      if (kDebugMode) {
+        print(imageUrl);
+      }
 
       // Fetch image bytes from the URL
       var response = await http.get(Uri.parse(imageUrl));
@@ -93,10 +97,14 @@ class _ShopInfoPageState extends State<ShopInfoPage> {
           imageBytes = response.bodyBytes;
         });
         await File(imagePath!).writeAsBytes(imageBytes!);
-        print("Image bytes fetched successfully");
+        if (kDebugMode) {
+          print("Image bytes fetched successfully");
+        }
       } else {
         // Handle errors
-        print("Failed to fetch image bytes: ${response.reasonPhrase}");
+        if (kDebugMode) {
+          print("Failed to fetch image bytes: ${response.reasonPhrase}");
+        }
       }
       return;
     }
@@ -470,12 +478,16 @@ class _ShopInfoPageState extends State<ShopInfoPage> {
       final responseBody = await response.stream.bytesToString();
       final jsonResponse = jsonDecode(responseBody);
       final imagePath = jsonResponse['imagePath'];
-      print('Logo uploaded successfully. Image path: $imagePath');
+      if (kDebugMode) {
+        print('Logo uploaded successfully. Image path: $imagePath');
+      }
     } else {
       // Failed to upload logo
-      print(response.statusCode);
-      print(response.reasonPhrase);
-      print('Failed to upload logo: ${response.reasonPhrase}');
+      if (kDebugMode) {
+        print(response.statusCode);
+        print(response.reasonPhrase);
+        print('Failed to upload logo: ${response.reasonPhrase}');
+      }
     }
   }
 }

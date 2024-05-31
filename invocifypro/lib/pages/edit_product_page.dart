@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -65,10 +66,14 @@ class _EditProductPageState extends State<EditProductPage> {
         _alertStockLimitController.text = data['alertStockLimit'].toString();
         _selectedStockUnit = data['stockUnit'];
       } else {
-        print('Failed to load product details');
+        if (kDebugMode) {
+          print('Failed to load product details');
+        }
       }
     } catch (error) {
-      print('Error fetching product details: $error');
+      if (kDebugMode) {
+        print('Error fetching product details: $error');
+      }
     } finally {
       EasyLoading.dismiss();
     }
@@ -379,7 +384,9 @@ class _EditProductPageState extends State<EditProductPage> {
         !_isNumeric(_currentStockController.text) ||
         !_isNumeric(_alertStockLimitController.text)) {
       // Handle error: Invalid data type
-      print('Error: Invalid data type for numeric fields');
+      if (kDebugMode) {
+        print('Error: Invalid data type for numeric fields');
+      }
       return;
     }
 
@@ -412,7 +419,9 @@ class _EditProductPageState extends State<EditProductPage> {
           const Duration(seconds: 3), () => Get.back(result: true));
     } else {
       // Handle errors
-      print('Error updating product: ${response.reasonPhrase}');
+      if (kDebugMode) {
+        print('Error updating product: ${response.reasonPhrase}');
+      }
       showSnackBar(context, "Error updating product.", isDismissible: false);
       await Future.delayed(
           const Duration(seconds: 3), () => Get.back(result: false));

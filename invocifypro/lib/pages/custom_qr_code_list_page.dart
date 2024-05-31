@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -48,7 +49,9 @@ class _CustomQRCodeListPageState extends State<CustomQRCodeListPage> {
     EasyLoading.dismiss();
 
     if (response.statusCode == 200) {
-      print(response.body);
+      if (kDebugMode) {
+        print(response.body);
+      }
       List<dynamic> data = json.decode(response.body);
 
       setState(() {
@@ -64,7 +67,9 @@ class _CustomQRCodeListPageState extends State<CustomQRCodeListPage> {
       });
     } else {
       showSnackBar(context, json.decode(response.body)['message']);
-      print('Failed to load products: ${response.reasonPhrase}');
+      if (kDebugMode) {
+        print('Failed to load products: ${response.reasonPhrase}');
+      }
     }
   }
 
@@ -288,9 +293,11 @@ class _CustomQRCodeListPageState extends State<CustomQRCodeListPage> {
     String productName,
     String sellingPrice,
   ) async {
-    print(qrCode);
-    print(productName);
-    print(sellingPrice);
+    if (kDebugMode) {
+      print(qrCode);
+      print(productName);
+      print(sellingPrice);
+    }
     EasyLoading.show(status: 'Please Wait...');
 
     final response = await http.post(
@@ -311,7 +318,9 @@ class _CustomQRCodeListPageState extends State<CustomQRCodeListPage> {
       fetchCustomQRCodes();
     } else {
       showSnackBar(context, json.decode(response.body)['message']);
-      print('Failed to add product: ${response.reasonPhrase}');
+      if (kDebugMode) {
+        print('Failed to add product: ${response.reasonPhrase}');
+      }
     }
   }
 
@@ -448,7 +457,9 @@ class _CustomQRCodeListPageState extends State<CustomQRCodeListPage> {
       fetchCustomQRCodes(); // Refresh the list after updating
     } else {
       showSnackBar(context, 'Failed to update QR code details.');
-      print('Failed to update QR code details: ${response.reasonPhrase}');
+      if (kDebugMode) {
+        print('Failed to update QR code details: ${response.reasonPhrase}');
+      }
     }
   }
 
